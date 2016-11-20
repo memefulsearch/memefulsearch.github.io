@@ -15,7 +15,9 @@
         '</div>',
         copyContainerSelector: '.copy-container',
         copiedClass: 'copied',
-        showCopyClass: 'show'
+        showCopyClass: 'show',
+        absoluteMinimumSearchChars: 2,
+        absoluteMinimumSearchResults: 50
     }
 
     mobileAndTabletcheck = function() {
@@ -51,7 +53,6 @@
                 that.data.forEach(function (item, idx) {
                     if (synonym[1].test(item[1])) {
                         that.data[idx][1] += ', ' + synonym[0];
-                        console.log(that.data[idx]);
                     }
                 });
             });
@@ -108,7 +109,10 @@
             this.text = this.searchInput.val().toString().toLowerCase();
             var results = datafilter.filter(this.text);
 
-            if (results.length > 0) {
+            if (results.length > 0 && (
+                    this.text.length > this.options.absoluteMinimumSearchChars
+                    || results.length < this.options.absoluteMinimumSearchResults
+                )) {
                 if (results.length < this.options.showIfLessThan || this.text.length > this.options.showIfSearchLonger || e.keyCode == 13) {
                     this.displayResults(results);
                 } 
