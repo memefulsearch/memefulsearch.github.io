@@ -1,0 +1,1 @@
+var synonyms = [["but why", /\bdisappointed, why\b/], ["that's a penis, that is a penis, thats a penis", /\bsogay, penis, totalall\b/], ["tits", /boobs/], ["incest, wincest", /tyrionlannister/], ["guns, explosion, bomb", /totalall, country, murica/], ["you're god damn right", /youregoddamnright/], ["porn", /\bfap\b/]];

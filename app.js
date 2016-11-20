@@ -26,12 +26,13 @@
 
     var datafilter = {
         data: data,
+        synonyms: synonyms,
 
         filter: function (text) {
             var results = [];
             this.data.forEach(function (entry) {
                 var tags = entry[1];
-                var re = [text, text.replace(/\s+/, '')];
+                var re = [text, text.replace(/\s+/g, '')];
 
                 for (var i = 0; i < re.length; i++) {
                     if (tags.match(re[i])) {
@@ -42,6 +43,18 @@
             });
 
             return results;
+        },
+
+        processSynonyms: function () {
+            var that = this;
+            this.synonyms.forEach(function (synonym) {
+                that.data.forEach(function (item, idx) {
+                    if (synonym[1].test(item[1])) {
+                        that.data[idx][1] += ', ' + synonym[0];
+                        console.log(that.data[idx]);
+                    }
+                });
+            });
         }
     };
 
@@ -64,6 +77,7 @@
             this.copyInput.blur(this.hideCopyScreen.bind(this));
             this.copyInput.keyup(this.hideCopyScreen.bind(this));
             this.isMobile = mobileAndTabletcheck();
+            datafilter.processSynonyms();
         },
 
         setNoResults: function () {
