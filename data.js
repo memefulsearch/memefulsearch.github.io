@@ -1,4 +1,4 @@
-var data = [
+var data = 
 [
   [
     "http://i.memeful.com/media/post/ER5rv2d_700w_0.jpg",
@@ -23453,4 +23453,4 @@ var data = [
     "tvb, 責罵, 妖講呢啲好悶呀, 掃興, 講呢d"
   ]
 ]
-];
+;
