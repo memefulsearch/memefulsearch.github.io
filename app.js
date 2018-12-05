@@ -1,6 +1,6 @@
 (function ($) {
 "strict"
-        
+
     var default_options = {
         selector: '#app-root',
         resultsSelector: '.results',
@@ -8,17 +8,23 @@
         noResultsClass: 'no-results',
         showIfLessThan: 30,
         showIfSearchLonger: 5,
-        template: 
-        '<div>' + 
-            '<a href="#url#" target="_new"><div class="copy-btn" title="copy feature requested by supabatman" onclick="return app.copy(this, \'#url#\');"><div>click here to copy</div><span>URL was copied!</span></div><img src="#url#" title="#tags#" alt="#tags#"/></a>' + 
-            '<div>#tags#</div>' +
+        template:
+		'<div class="col-3 d-flex align-items-stretch result-card">' +
+            '<div class="card">' +
+                '<img class="card-img-top" src="#url#" title="#tags#" alt="#tags#">' +
+                '<div class="card-body">' +
+                    '<a href="#url#" target="_new" onclick="return app.copy(this, \'#url#\');" class="btn btn-light col-12">' +
+                        'Copy URL' +
+                    '</a>' +
+                '</div>' +
+            '</div>' +
         '</div>',
         copyContainerSelector: '.copy-container',
         copiedClass: 'copied',
         showCopyClass: 'show',
         absoluteMinimumSearchChars: 2,
         absoluteMinimumSearchResults: 50
-    }
+    };
 
     mobileAndTabletcheck = function() {
       var check = false;
