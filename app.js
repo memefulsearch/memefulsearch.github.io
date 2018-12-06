@@ -11,18 +11,19 @@
         showIfLessThan: 30,
         showIfSearchLonger: 5,
         template:
-		'<div class="col-3 d-flex align-items-stretch result-card">' +
+		'<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 d-flex align-items-stretch result-card">' +
             '<div class="card">' +
                 '<img class="card-img-top" src="#url#" title="#tags#" alt="#tags#">' +
                 '<div class="card-body">' +
                     '<a href="#url#" target="_new" onclick="return app.copy(this, \'#url#\');" class="btn btn-light col-12">' +
                         'Copy URL' +
                     '</a>' +
-                '</div>' +
+			        '<p class="card-text" style="margin-top: 15px;"><small class="text-muted">#tags#"</small></p>'+
+                '</>' +
             '</div>' +
         '</div>',
         copyContainerSelector: '.copy-container',
-        copiedClass: 'copied',
+        copiedClass: 'bg-success text-white',
         showCopyClass: 'show',
         absoluteMinimumSearchChars: 2,
         absoluteMinimumSearchResults: 50
