@@ -1,24 +1,33 @@
 (function ($) {
 "strict"
-        
+
     var default_options = {
         selector: '#app-root',
         resultsSelector: '.results',
-        inputSelector: 'input[type=text]:first',
-        noResultsClass: 'no-results',
+        inputSelector: 'input[type=text]#search-field',
+		helpSelector: 'div.alert#help',
+        errorFeedbackSelector: '.invalid-feedback',
+        noResultsClass: 'is-invalid',
         showIfLessThan: 30,
         showIfSearchLonger: 5,
-        template: 
-        '<div>' + 
-            '<a href="#url#" target="_new"><div class="copy-btn" title="copy feature requested by supabatman" onclick="return app.copy(this, \'#url#\');"><div>click here to copy</div><span>URL was copied!</span></div><img src="#url#" title="#tags#" alt="#tags#"/></a>' + 
-            '<div>#tags#</div>' +
+        template:
+		'<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 d-flex align-items-stretch result-card">' +
+            '<div class="card">' +
+                '<img class="card-img-top" src="#url#" title="#tags#" alt="#tags#">' +
+                '<div class="card-body">' +
+                    '<a href="#url#" target="_new" onclick="return app.copy(this, \'#url#\');" class="btn btn-light col-12">' +
+                        'Copy URL' +
+                    '</a>' +
+			        '<p class="card-text" style="margin-top: 15px;"><small class="text-muted">#tags#"</small></p>'+
+                '</>' +
+            '</div>' +
         '</div>',
         copyContainerSelector: '.copy-container',
-        copiedClass: 'copied',
+        copiedClass: 'bg-success text-white',
         showCopyClass: 'show',
         absoluteMinimumSearchChars: 2,
         absoluteMinimumSearchResults: 50
-    }
+    };
 
     mobileAndTabletcheck = function() {
       var check = false;
@@ -63,6 +72,7 @@
         this.options = $.extend({}, default_options, options);
 
         this.initUI();
+        this.loadHelp();
         //this.focusAlways();
         this.searchInput.focus();
     }
@@ -70,17 +80,22 @@
     app.prototype = {
         initUI: function () {
             this.container = $(this.options.selector);
+            this.errorFeedback = $(this.options.errorFeedbackSelector);
             this.searchInput = this.container.find(this.options.inputSelector);
             this.resultsContainer = this.container.find(this.options.resultsSelector);
             this.searchInput.on('keyup change', this.onchange.bind(this));
-            this.copyContainer = $(this.options.copyContainerSelector)
+            this.copyContainer = $(this.options.copyContainerSelector);
             this.copyInput = this.copyContainer.find('input');
             this.copyInput.blur(this.hideCopyScreen.bind(this));
             this.copyInput.keyup(this.hideCopyScreen.bind(this));
             this.isMobile = mobileAndTabletcheck();
+            this.help = $(this.options.helpSelector);
             datafilter.processSynonyms();
         },
 
+		loadHelp: function(){
+        	this.help.html('Search will automatically show results if there is either less than '+ this.options.showIfLessThan +' memes found, or if searched text is longer than '+ this.options.showIfSearchLonger +' characters... or if you just press Enter!');
+		},
         setNoResults: function () {
             console.log('no results');
             ga('send', {
@@ -89,18 +104,20 @@
               eventAction: 'noResults',
               eventLabel: this.text
             });
-            this.container.addClass(this.options.noResultsClass);
+            this.errorFeedback.html('No meme found for this phrase :(');
+            this.searchInput.addClass(this.options.noResultsClass);
+			this.resultsContainer.html('');
         },
         resetNoResults: function () {
-            this.container.removeClass(this.options.noResultsClass);
+            this.searchInput.removeClass(this.options.noResultsClass);
         },
         resetSearch: function () {
-
             this.searchInput.val('');
             this.resultsContainer.html('');
         },
 
         onchange: function (e) {
+            console.log('changed');
             this.resetNoResults();
             if (e.keyCode == 27) {
                 this.resetSearch();
