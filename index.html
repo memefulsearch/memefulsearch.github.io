@@ -4,13 +4,17 @@
     <title>Memeful search by text - memeful searchable</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
    
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="data.js?4"></script>
     <script src="custom-data.js?3"></script>
-    <script src="app.js?v11"></script>
+    <script src="app.js?v12"></script>
     
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="style.css?v5" media="screen" rel="stylesheet" type="text/css"/>
+    <link href="style.css?v6" media="screen" rel="stylesheet" type="text/css"/>
     <script>
 		(function (i, s, o, g, r, a, m) {
 			i['GoogleAnalyticsObject'] = r;
@@ -33,14 +37,14 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="/">Memefulsearch</a>
-        <span class="badge badge-light">updated: 2017-08-31</span>
+        <a class="navbar-brand" href="./"><i class="fa fa-fw fa-cat"></i> + <i class="fa fa-fw fa-search"></i> = Memefulsearch</a>
     
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
     
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <span id="updated-badge" class="badge badge-light d-xs-none">updated: 2018-12-07</span>
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="https://github.com/memefulsearch/memefulsearch.github.io/issues">
@@ -58,13 +62,19 @@
 </nav>
 
 <div class="container" id="body-container">
-    <div class="alert alert-info small" id="help" role="alert"></div>
+    <div class="alert alert-info small d-none d-sm-block" id="help" role="alert"></div>
     
     <div id="app-root">
         <div class="row">
             <div class="col">
+    
                 <label for="search-field">Meme name:</label>
-                <input type="text" id="search-field" class="form-control form-control-lg" placeholder="Search for meme..."/>
+                <div class="input-group">
+                    <input type="text" class="form-control form-control-lg" id="search-field" placeholder="Search for meme..." aria-label="Search for meme...">
+                    <div class="input-group-append">
+                        <button class="btn " type="button" id="go-search"><i class="fa fa-fw fa-search"></i></button>
+                    </div>
+                </div>
                 <div class="invalid-feedback"></div>
             </div>
         </div>
