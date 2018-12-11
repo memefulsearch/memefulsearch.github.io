@@ -6,20 +6,20 @@
         resultsSelector: '.results',
         searchButtonSelector: 'button.btn#go-search',
         inputSelector: 'input[type=text]#search-field',
-		helpSelector: 'div.alert#help',
+        helpSelector: 'div.alert#help',
         errorFeedbackSelector: '.invalid-feedback',
         noResultsClass: 'is-invalid',
         showIfLessThan: 30,
         showIfSearchLonger: 5,
         template:
-		'<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 d-flex align-items-stretch result-card">' +
+        '<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 d-flex align-items-stretch result-card">' +
             '<div class="card">' +
                 '<img class="card-img-top" src="#url#" title="#tags#" alt="#tags#">' +
                 '<div class="card-body">' +
                     '<a href="#url#" target="_new" onclick="return app.copy(this, \'#url#\');" class="btn btn-light col-12">' +
                         'Copy URL' +
                     '</a>' +
-			        '<p class="card-text" style="margin-top: 15px;"><small class="text-muted">#tags#</small></p>'+
+                    '<p class="card-text" style="margin-top: 15px;"><small class="text-muted">#tags#</small></p>'+
                 '</>' +
             '</div>' +
         '</div>',
@@ -86,8 +86,8 @@
             this.searchInput = this.container.find(this.options.inputSelector);
             this.resultsContainer = this.container.find(this.options.resultsSelector);
             this.searchInput.on('keyup change', this.loadResults.bind(this, this.searchInput));
-			this.searchButton.on('click', this.loadResults.bind(this, this.searchInput));
-			this.copyContainer = $(this.options.copyContainerSelector);
+            this.searchButton.on('click', this.loadResults.bind(this, this.searchInput));
+            this.copyContainer = $(this.options.copyContainerSelector);
             this.copyInput = this.copyContainer.find('input');
             this.copyInput.blur(this.hideCopyScreen.bind(this));
             this.copyInput.keyup(this.hideCopyScreen.bind(this));
@@ -97,27 +97,27 @@
         },
 
         loadResults: function(searchInput, e){
-			this.resetNoResults();
-			if (e.keyCode == 27) {
-				this.resetSearch();
-			}
-			this.text = searchInput.val().toString().toLowerCase();
-			var results = datafilter.filter(this.text);
+            this.resetNoResults();
+            if (e.keyCode == 27) {
+                this.resetSearch();
+            }
+            this.text = searchInput.val().toString().toLowerCase();
+            var results = datafilter.filter(this.text);
 
-			if (results.length > 0 && (
-				this.text.length > this.options.absoluteMinimumSearchChars
-				|| results.length < this.options.absoluteMinimumSearchResults
-			)) {
-				if (results.length < this.options.showIfLessThan || this.text.length > this.options.showIfSearchLonger || e.keyCode == 13 || e.type == 'click') {
-					this.displayResults(results);
-				}
-			} else if (results.length === 0) {
-				this.setNoResults();
-			}
+            if (results.length > 0 && (
+                this.text.length > this.options.absoluteMinimumSearchChars
+                || results.length < this.options.absoluteMinimumSearchResults
+            )) {
+                if (results.length < this.options.showIfLessThan || this.text.length > this.options.showIfSearchLonger || e.keyCode == 13 || e.type == 'click') {
+                    this.displayResults(results);
+                }
+            } else if (results.length === 0) {
+                this.setNoResults();
+            }
         },
-		loadHelp: function(){
-        	this.help.html('<i class="fa fa-fw fa-info-circle"></i> Search will automatically show results if there is either less than '+ this.options.showIfLessThan +' memes found, or if searched text is longer than '+ this.options.showIfSearchLonger +' characters... or if you just press Enter/Button!');
-		},
+        loadHelp: function(){
+            this.help.html('<i class="fa fa-fw fa-info-circle"></i> Search will automatically show results if there is either less than '+ this.options.showIfLessThan +' memes found, or if searched text is longer than '+ this.options.showIfSearchLonger +' characters... or if you just press Enter/Button!');
+        },
         setNoResults: function () {
             console.log('no results');
             ga('send', {
@@ -128,7 +128,7 @@
             });
             this.errorFeedback.html('No meme found for this phrase :(');
             this.searchInput.addClass(this.options.noResultsClass);
-			this.resultsContainer.html('');
+            this.resultsContainer.html('');
         },
         resetNoResults: function () {
             this.searchInput.removeClass(this.options.noResultsClass);
