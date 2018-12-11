@@ -4,6 +4,7 @@
     var default_options = {
         selector: '#app-root',
         resultsSelector: '.results',
+        searchButtonSelector: 'button.btn#go-search',
         inputSelector: 'input[type=text]#search-field',
 		helpSelector: 'div.alert#help',
         errorFeedbackSelector: '.invalid-feedback',
@@ -18,7 +19,7 @@
                     '<a href="#url#" target="_new" onclick="return app.copy(this, \'#url#\');" class="btn btn-light col-12">' +
                         'Copy URL' +
                     '</a>' +
-			        '<p class="card-text" style="margin-top: 15px;"><small class="text-muted">#tags#"</small></p>'+
+			        '<p class="card-text" style="margin-top: 15px;"><small class="text-muted">#tags#</small></p>'+
                 '</>' +
             '</div>' +
         '</div>',
@@ -81,10 +82,12 @@
         initUI: function () {
             this.container = $(this.options.selector);
             this.errorFeedback = $(this.options.errorFeedbackSelector);
+            this.searchButton = $(this.options.searchButtonSelector);
             this.searchInput = this.container.find(this.options.inputSelector);
             this.resultsContainer = this.container.find(this.options.resultsSelector);
-            this.searchInput.on('keyup change', this.onchange.bind(this));
-            this.copyContainer = $(this.options.copyContainerSelector);
+            this.searchInput.on('keyup change', this.loadResults.bind(this, this.searchInput));
+			this.searchButton.on('click', this.loadResults.bind(this, this.searchInput));
+			this.copyContainer = $(this.options.copyContainerSelector);
             this.copyInput = this.copyContainer.find('input');
             this.copyInput.blur(this.hideCopyScreen.bind(this));
             this.copyInput.keyup(this.hideCopyScreen.bind(this));
@@ -93,8 +96,27 @@
             datafilter.processSynonyms();
         },
 
+        loadResults: function(searchInput, e){
+			this.resetNoResults();
+			if (e.keyCode == 27) {
+				this.resetSearch();
+			}
+			this.text = searchInput.val().toString().toLowerCase();
+			var results = datafilter.filter(this.text);
+
+			if (results.length > 0 && (
+				this.text.length > this.options.absoluteMinimumSearchChars
+				|| results.length < this.options.absoluteMinimumSearchResults
+			)) {
+				if (results.length < this.options.showIfLessThan || this.text.length > this.options.showIfSearchLonger || e.keyCode == 13 || e.type == 'click') {
+					this.displayResults(results);
+				}
+			} else if (results.length === 0) {
+				this.setNoResults();
+			}
+        },
 		loadHelp: function(){
-        	this.help.html('Search will automatically show results if there is either less than '+ this.options.showIfLessThan +' memes found, or if searched text is longer than '+ this.options.showIfSearchLonger +' characters... or if you just press Enter!');
+        	this.help.html('<i class="fa fa-fw fa-info-circle"></i> Search will automatically show results if there is either less than '+ this.options.showIfLessThan +' memes found, or if searched text is longer than '+ this.options.showIfSearchLonger +' characters... or if you just press Enter/Button!');
 		},
         setNoResults: function () {
             console.log('no results');
@@ -114,28 +136,6 @@
         resetSearch: function () {
             this.searchInput.val('');
             this.resultsContainer.html('');
-        },
-
-        onchange: function (e) {
-            console.log('changed');
-            this.resetNoResults();
-            if (e.keyCode == 27) {
-                this.resetSearch();
-            }
-
-            this.text = this.searchInput.val().toString().toLowerCase();
-            var results = datafilter.filter(this.text);
-
-            if (results.length > 0 && (
-                    this.text.length > this.options.absoluteMinimumSearchChars
-                    || results.length < this.options.absoluteMinimumSearchResults
-                )) {
-                if (results.length < this.options.showIfLessThan || this.text.length > this.options.showIfSearchLonger || e.keyCode == 13) {
-                    this.displayResults(results);
-                } 
-            } else if (results.length === 0) {
-                this.setNoResults();
-            }
         },
 
         focusAlways: function () {
@@ -197,7 +197,7 @@
         copyNative: function (text) {
             return document.execCommand("copy");
         }
-    };    
+    };
 
     $(document).ready(function () {
 

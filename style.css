@@ -1,5 +1,9 @@
 #body-container{
-    margin-top: 50px;
+    margin-top: 30px;
+}
+
+#updated-badge{
+    margin-right: 15px;
 }
 
 .result-card{
