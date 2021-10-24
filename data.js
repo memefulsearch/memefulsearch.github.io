@@ -8369,6 +8369,10 @@ var data =
     "videogames, film, documentary"
   ],
   [
+    "https://i.memeful.com/media/post/LR8Ev7d_700wa_0.gif",
+    "haha, lmao, lol, laughing, scary, puppets, laughoutloud, totalall"
+  ],
+  [
     "https://i.memeful.com/media/post/LR8Ey2d_700wa_0.gif",
     "secret, shh, totalall"
   ],
@@ -10203,6 +10207,10 @@ var data =
   [
     "https://i.memeful.com/media/post/PRo3oYR_700wa_0.gif",
     "bitchplease"
+  ],
+  [
+    "https://i.memeful.com/media/post/PRo3pmR_700wa_0.gif",
+    "nope"
   ],
   [
     "https://i.memeful.com/media/post/PRo3q9R_700wa_0.gif",
@@ -14435,6 +14443,10 @@ var data =
   [
     "https://i.memeful.com/media/post/WwlbEmR_700wa_0.gif",
     "swag, spiderman, fuckyou, damn, fuck, superhero, shityou"
+  ],
+  [
+    "https://i.memeful.com/media/post/WwlbJ8R_700wa_0.gif",
+    "sad, facepalm, upset, disapoinnted"
   ],
   [
     "https://i.memeful.com/media/post/WwlbKDR_700wa_0.gif",
